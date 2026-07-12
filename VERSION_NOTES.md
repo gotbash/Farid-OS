@@ -1,5 +1,10 @@
 # Version History
 
+## v1.7 - Search Query Performance
+- Added a standard-library Search Query Performance analyzer for Brand Analytics exports.
+- Added a Raycast script command with clipboard and temporary Markdown output.
+- Added a labeled synthetic SQP sample for reproducible testing.
+
 ## v1.6 - Amazon Data Intake (Current)
 - Added a standard-library Search Term Report CSV analyzer.
 - Added data-quality checks, PPC metric calculations, and review candidate rules.

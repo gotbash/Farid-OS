@@ -47,5 +47,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.4 — Notion Automation:** reviewed data contract, Automation Hub, and Raycast capture commands.
 - **v1.5 — Reviewed Direct Write:** local validation plus an authenticated Notion connector contract.
 - **v1.6 — Amazon Data Intake:** validated Search Term Report analysis and Notion-ready output.
+- **v1.7 — Search Query Performance:** Brand Analytics SQP analysis for funnel-style exports.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.
