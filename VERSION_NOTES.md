@@ -1,5 +1,10 @@
 # Version History
 
+## v1.8 - Notion Operating Templates
+- Added Notion-ready Daily Pulse and RCA templates.
+- Aligned the new templates with the Raycast Daily Pulse and RCA AI commands.
+- Updated README versioning to reflect the current release line.
+
 ## v1.7 - Search Query Performance
 - Added a standard-library Search Query Performance analyzer for Brand Analytics exports.
 - Added a Raycast script command with clipboard and temporary Markdown output.
