@@ -62,7 +62,7 @@ def fmt_int(value: float) -> str:
     return f"{value:,.0f}"
 
 
-def analyze(path: Path) -> str:
+def build_report(path: Path) -> tuple[list[dict[str, float | str]], list[tuple[int, str]], dict[str, float]]:
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         sample = list(csv.reader(handle))
         if not sample:
@@ -97,6 +97,11 @@ def analyze(path: Path) -> str:
         raise ValueError("No valid rows remain after validation")
 
     totals = {metric: sum(row[metric] for row in parsed) for metric in ("impressions", "clicks", "cart_adds", "purchases")}
+    return parsed, invalid, totals
+
+
+def analyze(path: Path) -> str:
+    parsed, invalid, totals = build_report(path)
     top_queries = sorted(parsed, key=lambda row: row["impressions"], reverse=True)[:10]
     weak_queries = sorted(
         (row for row in parsed if row["impressions"] >= 1000 and row["clicks"] == 0),
@@ -171,13 +176,102 @@ def analyze(path: Path) -> str:
     return "\n".join(lines) + "\n"
 
 
+def wbr_summary(path: Path) -> str:
+    parsed, invalid, totals = build_report(path)
+    top_queries = sorted(parsed, key=lambda row: row["impressions"], reverse=True)[:6]
+    strong_queries = sorted(
+        (
+            row
+            for row in parsed
+            if row["purchases"] >= 1
+            and pct(row["purchases"], row["clicks"]) is not None
+            and pct(row["purchases"], row["clicks"]) >= 0.1
+        ),
+        key=lambda row: row["purchases"],
+        reverse=True,
+    )[:8]
+    today = ""
+    lines = [
+        "# SQP WBR Summary",
+        "",
+        f"Source: `{path.name}`",
+        "",
+        "## Executive summary",
+        "",
+        "Search Query Performance shows available demand and healthy post-click conversion. The main operating question is how to improve click capture from existing visibility while protecting proven converting query clusters.",
+        "",
+        "## KPI snapshot",
+        "",
+        f"- Input rows: {fmt_int(len(parsed) + len(invalid))}",
+        f"- Valid rows: {fmt_int(len(parsed))}",
+        f"- Impressions: {fmt_int(totals['impressions'])}",
+        f"- Clicks: {fmt_int(totals['clicks'])}",
+        f"- Cart adds: {fmt_int(totals['cart_adds'])}",
+        f"- Purchases: {fmt_int(totals['purchases'])}",
+        f"- CTR: {fmt_pct(pct(totals['clicks'], totals['impressions']))}",
+        f"- Click-to-cart: {fmt_pct(pct(totals['cart_adds'], totals['clicks']))}",
+        f"- Click-to-purchase: {fmt_pct(pct(totals['purchases'], totals['clicks']))}",
+        "- TACoS: [MISSING - total Amazon sales are not present in this SQP export]",
+        "",
+        "## Top query concentration",
+        "",
+    ]
+    lines.extend(
+        f"- `{row['search_query']}` - impressions {fmt_int(row['impressions'])}, clicks {fmt_int(row['clicks'])}, purchases {fmt_int(row['purchases'])}"
+        for row in top_queries
+    )
+    lines.extend([
+        "",
+        "## Main funnel leak",
+        "",
+        f"- Visibility-to-click is the primary leak: CTR is {fmt_pct(pct(totals['clicks'], totals['impressions']))}.",
+        f"- Post-click behavior is stronger: click-to-purchase is {fmt_pct(pct(totals['purchases'], totals['clicks']))}.",
+        "",
+        "## Strong query clusters",
+        "",
+    ])
+    if strong_queries:
+        lines.extend(
+            f"- `{row['search_query']}` - purchases {fmt_int(row['purchases'])}, click-to-purchase {fmt_pct(pct(row['purchases'], row['clicks']))}"
+            for row in strong_queries
+        )
+    else:
+        lines.append("- [MISSING - no strong query cluster detected under current rule]")
+    lines.extend([
+        "",
+        "## Recommended actions",
+        "",
+        "- Improve CTR on the largest impression queries through title, main image, offer clarity, and listing relevance review.",
+        "- Protect and expand high-converting query clusters in PPC and listing content where paid data confirms efficiency.",
+        "- Validate the SQP read against Search Term Report, placement data, inventory, price, and promotions before changing bids broadly.",
+        "",
+        "## Decision needed",
+        "",
+        "- Choose next-week operating focus: CTR repair, converter protection, or combined plan.",
+        "",
+        "## Notion-ready summary",
+        "",
+        "> SQP shows healthy post-click conversion but weaker visibility-to-click efficiency. Focus next week on improving CTR for the highest-impression queries, protecting proven converting query clusters, and validating against paid search term and placement data before broad bid changes.",
+    ])
+    if invalid:
+        lines.extend([
+            "",
+            "## Data quality note",
+            "",
+            f"- Invalid rows excluded: {fmt_int(len(invalid))}",
+        ])
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("csv_path", type=Path)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--wbr", action="store_true", help="Output a Notion-ready WBR summary")
     args = parser.parse_args()
     try:
-        report = analyze(args.csv_path.expanduser().resolve())
+        csv_path = args.csv_path.expanduser().resolve()
+        report = wbr_summary(csv_path) if args.wbr else analyze(csv_path)
     except (OSError, ValueError, csv.Error) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1

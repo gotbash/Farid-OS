@@ -1,4 +1,4 @@
-# Farid OS v1.9
+# Farid OS v1.10
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -50,5 +50,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.7 — Search Query Performance:** Brand Analytics SQP analysis for funnel-style exports.
 - **v1.8 — Notion Operating Templates:** Daily Pulse and RCA templates aligned with Raycast prompts.
 - **v1.9 — Raycast Notion Capture Commands:** Daily Pulse and RCA capture commands for reviewed Notion insertion.
+- **v1.10 — SQP WBR Capture:** SQP CSV to Notion-ready WBR summary from Raycast.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

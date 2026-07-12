@@ -1,5 +1,9 @@
 # Version History
 
+## v1.10 - SQP WBR Capture
+- Added a Notion-ready WBR output mode to the SQP analyzer.
+- Added a Raycast command that turns an SQP CSV path into a clipboard-ready WBR summary.
+
 ## v1.9 - Raycast Notion Capture Commands
 - Added Raycast script commands for Daily Pulse and RCA capture.
 - Commands copy Notion-ready Markdown to the clipboard for reviewed insertion into the Decision & Report Log.
