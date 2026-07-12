@@ -16,6 +16,7 @@ v1.5 connects the Raycast preparation workflow to the authenticated Notion conne
 - Data source: `collection://6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3`
 - Connector payload contract: `notion/connector-actions/create-wbr.json`
 - SQP WBR payload contract: `notion/connector-actions/create-sqp-wbr.json`
+- PPC Search Term WBR/RCA payload contract: `notion/connector-actions/create-ppc-search-term-review.json`
 
 ## Why validation is separate
 
@@ -23,10 +24,13 @@ Raycast Script Commands cannot call the Codex Notion connector directly. Keeping
 
 For SQP WBR, Codex can write directly through the connected Notion MCP connector. The local Raycast command still copies Markdown to the clipboard and does not store Notion credentials.
 
+For PPC Search Term review, Codex creates two records: one WBR and one RCA. This separates the executive readout from the root-cause workflow.
+
 ## Submission policy
 
 - Never submit content containing `[MISSING]` or `[VERIFY]`.
 - Exception: SQP WBR may include explicit `[MISSING]` notes for fields that the SQP export cannot contain, such as TACoS.
+- Exception: PPC Search Term records may include explicit TACoS missing notes because Search Term Reports do not contain total Amazon sales.
 - Never infer owners, dates, sources, or performance figures.
 - Create one record per reporting period.
 - Preserve source links inside the page body.

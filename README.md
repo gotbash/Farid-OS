@@ -1,4 +1,4 @@
-# Farid OS v1.15
+# Farid OS v1.16
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -56,5 +56,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.13 — Search Catalog Performance:** ASIN-level search catalog analysis and latest-report dispatch support.
 - **v1.14 — Top Search Terms Intake:** streaming analyzer for large Brand Analytics Top Search Terms exports.
 - **v1.15 — Sponsored Products Search Term XLSX:** PPC Search Term Report XLSX support in latest-report intake.
+- **v1.16 — PPC Search Term Notion Review:** direct WBR and RCA records for Sponsored Products Search Term analysis.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

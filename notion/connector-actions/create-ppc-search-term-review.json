@@ -1,0 +1,55 @@
+{
+  "parent": {
+    "data_source_id": "6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3"
+  },
+  "records": [
+    {
+      "properties": {
+        "Record": "PPC Search Term WBR - BRAND - WEEK",
+        "Type": "WBR",
+        "date:Decision Date:start": "YYYY-MM-DD",
+        "date:Decision Date:is_datetime": 0,
+        "Area": "[\"Amazon Ads\"]",
+        "Impact": "High",
+        "Owner": "Farid",
+        "Status": "In progress",
+        "date:Review Date:start": "YYYY-MM-DD",
+        "date:Review Date:is_datetime": 0
+      },
+      "content_contract": [
+        "Source",
+        "Executive summary",
+        "KPI snapshot",
+        "High-ACOS terms requiring review",
+        "Harvest candidate",
+        "Waste candidates",
+        "Recommended actions",
+        "Decision needed"
+      ]
+    },
+    {
+      "properties": {
+        "Record": "RCA - PPC ACOS - BRAND - WEEK",
+        "Type": "Root Cause Analysis",
+        "date:Decision Date:start": "YYYY-MM-DD",
+        "date:Decision Date:is_datetime": 0,
+        "Area": "[\"Amazon Ads\"]",
+        "Impact": "High",
+        "Owner": "Farid",
+        "Status": "In progress",
+        "date:Review Date:start": "YYYY-MM-DD",
+        "date:Review Date:is_datetime": 0
+      },
+      "content_contract": [
+        "Problem statement",
+        "Observed symptoms",
+        "Cause tree",
+        "5 Whys chain",
+        "Immediate mitigation",
+        "Long-term prevention",
+        "Validation step"
+      ]
+    }
+  ],
+  "guardrail": "Do not make automatic bid or negative-keyword changes. Use Search Term Report output as review candidates until campaign, ad group, bid, placement, margin, and rank context are checked."
+}

@@ -1,5 +1,10 @@
 # Version History
 
+## v1.16 - PPC Search Term Notion Review
+- Added a Notion connector contract for PPC Search Term WBR and RCA creation.
+- Created separate WBR and RCA records from the Sponsored Products Search Term report.
+- Preserved the guardrail against automatic bid or negative-keyword changes.
+
 ## v1.15 - Sponsored Products Search Term XLSX
 - Added XLSX support for Amazon Ads Sponsored Products Search Term reports.
 - Updated latest-report intake to consider `.xlsx` files in `~/Downloads/Rubex/Reports`.
