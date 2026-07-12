@@ -13,10 +13,10 @@ from pathlib import Path
 
 ALIASES = {
     "search_query": {"search_query", "search query", "query", "search term"},
-    "impressions": {"impressions", "search funnel - impressions"},
-    "clicks": {"clicks", "search funnel - clicks"},
-    "cart_adds": {"cart_adds", "cart adds", "search funnel - cart adds"},
-    "purchases": {"purchases", "orders", "search funnel - purchases"},
+    "impressions": {"impressions", "impressions: total count", "search funnel - impressions"},
+    "clicks": {"clicks", "clicks: total count", "search funnel - clicks"},
+    "cart_adds": {"cart_adds", "cart adds", "cart adds: total count", "search funnel - cart adds"},
+    "purchases": {"purchases", "orders", "purchases: total count", "search funnel - purchases"},
 }
 
 
@@ -64,11 +64,16 @@ def fmt_int(value: float) -> str:
 
 def analyze(path: Path) -> str:
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
-        reader = csv.DictReader(handle)
-        if not reader.fieldnames:
+        sample = list(csv.reader(handle))
+        if not sample:
             raise ValueError("CSV has no header row")
-        columns = resolve_columns(reader.fieldnames)
-        rows = list(reader)
+        header_index = 0
+        if sample[0] and "search query" not in normalize(sample[0][0]):
+            if len(sample) > 1 and any("search query" in normalize(cell) for cell in sample[1]):
+                header_index = 1
+        fieldnames = sample[header_index]
+        columns = resolve_columns(fieldnames)
+        rows = [dict(zip(fieldnames, row)) for row in sample[header_index + 1 :]]
 
     if not rows:
         raise ValueError("CSV contains no data rows")
@@ -99,7 +104,13 @@ def analyze(path: Path) -> str:
         reverse=True,
     )
     strong_queries = sorted(
-        (row for row in parsed if row["purchases"] >= 1 and pct(row["purchases"], row["clicks"]) is not None and pct(row["purchases"], row["clicks"]) >= 0.1),
+        (
+            row
+            for row in parsed
+            if row["purchases"] >= 1
+            and pct(row["purchases"], row["clicks"]) is not None
+            and pct(row["purchases"], row["clicks"]) >= 0.1
+        ),
         key=lambda row: row["purchases"],
         reverse=True,
     )
@@ -124,6 +135,7 @@ def analyze(path: Path) -> str:
         f"- CTR: {fmt_pct(pct(totals['clicks'], totals['impressions']))}",
         f"- Click-to-cart: {fmt_pct(pct(totals['cart_adds'], totals['clicks']))}",
         f"- Click-to-purchase: {fmt_pct(pct(totals['purchases'], totals['clicks']))}",
+        "- TACoS: [MISSING — total Amazon sales are not present in this Search Query Performance export]",
         "",
         "## Top queries by impressions",
         "",
@@ -151,6 +163,7 @@ def analyze(path: Path) -> str:
         "",
         "- This is a directional funnel analysis, not an automatic optimization engine.",
         "- Compare against paid search term analysis, placement data, and inventory context before changing bids or targeting.",
+        "- Use the Search Query Performance export's date range and price fields as supporting context only.",
     ])
     if invalid:
         lines.extend(["", "## Excluded rows", ""])
