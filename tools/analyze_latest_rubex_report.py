@@ -8,6 +8,7 @@ import csv
 import sys
 from pathlib import Path
 
+import catalog_performance_analyzer
 import search_term_analyzer
 import sqp_analyzer
 
@@ -31,8 +32,10 @@ def read_header(path: Path) -> list[str]:
         rows = list(csv.reader(handle))
     if not rows:
         raise ValueError("CSV has no rows")
-    if rows[0] and "search query" not in normalize(rows[0][0]):
-        if len(rows) > 1 and any("search query" in normalize(cell) for cell in rows[1]):
+    first_cell = normalize(rows[0][0]) if rows[0] else ""
+    known_first_columns = {"search query", "asin title", "date", "customer search term", "search term"}
+    if first_cell not in known_first_columns:
+        if len(rows) > 1 and any(normalize(cell) in known_first_columns for cell in rows[1]):
             return rows[1]
     return rows[0]
 
@@ -41,6 +44,8 @@ def detect_report_type(path: Path) -> str:
     header = {normalize(column) for column in read_header(path)}
     if {"search query", "impressions: total count", "clicks: total count", "cart adds: total count", "purchases: total count"}.issubset(header):
         return "sqp"
+    if {"asin title", "asin", "impressions: impressions", "clicks: clicks", "cart adds: cart adds", "purchases: purchases"}.issubset(header):
+        return "search_catalog_performance"
     if {"customer search term", "impressions", "clicks"}.issubset(header) or {"search term", "impressions", "clicks"}.issubset(header):
         return "search_term"
     if {"date", "customers in awareness", "customers in consideration", "branded search customers", "branded search ratio"}.issubset(header):
@@ -52,6 +57,8 @@ def analyze(path: Path) -> tuple[str, str]:
     report_type = detect_report_type(path)
     if report_type == "sqp":
         return report_type, sqp_analyzer.wbr_summary(path)
+    if report_type == "search_catalog_performance":
+        return report_type, catalog_performance_analyzer.analyze(path)
     if report_type == "search_term":
         return report_type, search_term_analyzer.analyze(path, acos_limit=0.40, waste_clicks=8)
     raise ValueError(f"Unsupported report type: {report_type}. Add a dedicated analyzer before using this file.")

@@ -1,4 +1,4 @@
-# Farid OS v1.12
+# Farid OS v1.13
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -53,5 +53,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.10 — SQP WBR Capture:** SQP CSV to Notion-ready WBR summary from Raycast.
 - **v1.11 — Notion SQP Auto-Write:** Codex connector contract for writing SQP WBR records directly to Decision & Report Log.
 - **v1.12 — Latest Rubex Report Intake:** Raycast command that finds and analyzes the newest supported Rubex CSV.
+- **v1.13 — Search Catalog Performance:** ASIN-level search catalog analysis and latest-report dispatch support.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

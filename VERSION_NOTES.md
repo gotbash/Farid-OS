@@ -1,5 +1,10 @@
 # Version History
 
+## v1.13 - Search Catalog Performance
+- Added a Search Catalog Performance analyzer for ASIN-level search funnel exports.
+- Updated the latest Rubex report dispatcher to detect metadata-row catalog files.
+- Kept Brand Analytics Trends detection explicit but unsupported until a dedicated analyzer is added.
+
 ## v1.12 - Latest Rubex Report Intake
 - Added a dispatcher that finds the newest CSV in `~/Downloads/Rubex/Reports`.
 - Added report-type detection for SQP, Search Term Report, and Brand Analytics Trends.
