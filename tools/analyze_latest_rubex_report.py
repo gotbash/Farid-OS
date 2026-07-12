@@ -11,6 +11,7 @@ from pathlib import Path
 import catalog_performance_analyzer
 import search_term_analyzer
 import sqp_analyzer
+import top_search_terms_analyzer
 
 
 DEFAULT_REPORTS_DIR = Path("~/Downloads/Rubex/Reports").expanduser()
@@ -29,15 +30,17 @@ def latest_csv(reports_dir: Path) -> Path:
 
 def read_header(path: Path) -> list[str]:
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
-        rows = list(csv.reader(handle))
-    if not rows:
+        reader = csv.reader(handle)
+        first_row = next(reader, None)
+        second_row = next(reader, None)
+    if first_row is None:
         raise ValueError("CSV has no rows")
-    first_cell = normalize(rows[0][0]) if rows[0] else ""
-    known_first_columns = {"search query", "asin title", "date", "customer search term", "search term"}
+    first_cell = normalize(first_row[0]) if first_row else ""
+    known_first_columns = {"search query", "asin title", "date", "customer search term", "search term", "search frequency rank"}
     if first_cell not in known_first_columns:
-        if len(rows) > 1 and any(normalize(cell) in known_first_columns for cell in rows[1]):
-            return rows[1]
-    return rows[0]
+        if second_row and any(normalize(cell) in known_first_columns for cell in second_row):
+            return second_row
+    return first_row
 
 
 def detect_report_type(path: Path) -> str:
@@ -46,6 +49,8 @@ def detect_report_type(path: Path) -> str:
         return "sqp"
     if {"asin title", "asin", "impressions: impressions", "clicks: clicks", "cart adds: cart adds", "purchases: purchases"}.issubset(header):
         return "search_catalog_performance"
+    if {"search frequency rank", "search term", "top clicked brand #1", "top clicked product #1: asin"}.issubset(header):
+        return "top_search_terms"
     if {"customer search term", "impressions", "clicks"}.issubset(header) or {"search term", "impressions", "clicks"}.issubset(header):
         return "search_term"
     if {"date", "customers in awareness", "customers in consideration", "branded search customers", "branded search ratio"}.issubset(header):
@@ -59,6 +64,8 @@ def analyze(path: Path) -> tuple[str, str]:
         return report_type, sqp_analyzer.wbr_summary(path)
     if report_type == "search_catalog_performance":
         return report_type, catalog_performance_analyzer.analyze(path)
+    if report_type == "top_search_terms":
+        return report_type, top_search_terms_analyzer.analyze(path, limit=100)
     if report_type == "search_term":
         return report_type, search_term_analyzer.analyze(path, acos_limit=0.40, waste_clicks=8)
     raise ValueError(f"Unsupported report type: {report_type}. Add a dedicated analyzer before using this file.")

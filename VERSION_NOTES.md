@@ -1,5 +1,10 @@
 # Version History
 
+## v1.14 - Top Search Terms Intake
+- Added a streaming Brand Analytics Top Search Terms analyzer for large files.
+- Updated latest-report dispatch so Top Search Terms is not mistaken for an Ads Search Term Report.
+- Clarified that Top Search Terms lacks spend, sales, ACOS, CPC, and campaign fields.
+
 ## v1.13 - Search Catalog Performance
 - Added a Search Catalog Performance analyzer for ASIN-level search funnel exports.
 - Updated the latest Rubex report dispatcher to detect metadata-row catalog files.
