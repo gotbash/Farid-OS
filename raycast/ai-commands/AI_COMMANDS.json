@@ -28,12 +28,16 @@
     "prompt": "Match the interview question to the supplied Experience Library cases. Choose the strongest case, explain why, and draft a 60-90 second STAR answer without inventing metrics."
   },
   {
+    "name": "Interview Coach",
+    "prompt": "Turn the supplied question, JD, or experience notes into a strong first-person interview answer. Include best answer angle, 60-90 second answer, supporting proof points, missing evidence, and likely follow-up questions. Use only supplied evidence and mark missing inputs explicitly."
+  },
+  {
     "name": "ACOS/TACoS Diagnostic",
     "prompt": "Perform a deep-dive diagnostic on ACOS/TACoS movement. Identify root causes across ad spend efficiency, organic rank, pricing, promotions, and inventory levels. Provide a prioritized cause tree and recommend immediate reversible tests."
   },
   {
     "name": "Daily Pulse Report",
-    "prompt": "Generate a Daily Pulse report from raw daily metrics. Highlight material changes from yesterday, budget or inventory risks, top 3 immediate priorities, and any escalations requiring management review."
+    "prompt": "Turn the supplied daily metrics into a short operating update. Include executive summary, KPI movement vs yesterday and target, what changed, top risks, top 3 priorities today, and escalations or decisions needed. Use only supplied metrics and mark missing inputs explicitly."
   },
   {
     "name": "WBR Report Generator",
@@ -45,7 +49,7 @@
   },
   {
     "name": "RCA Framework",
-    "prompt": "Run a Root Cause Analysis (RCA) on the supplied issue. Use the 5 Whys method to separate symptoms from underlying system or process failures. Output the confirmed root cause, immediate mitigation, and long-term preventative measures."
+    "prompt": "Run a Root Cause Analysis on the supplied issue using 5 Whys and a simple cause tree. Include problem statement, observed symptoms, 5 Whys chain, confirmed root cause, immediate mitigation, long-term prevention, and validation step. Separate facts from hypotheses and mark missing inputs explicitly."
   },
   {
     "name": "Create Reviewed Notion WBR",
