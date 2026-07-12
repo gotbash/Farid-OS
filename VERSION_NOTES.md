@@ -1,5 +1,10 @@
 # Version History
 
+## v1.18 - Sponsored Products Targeting Report
+- Added a Sponsored Products Targeting report analyzer.
+- Updated latest-report dispatch to identify targeting-level XLSX exports.
+- Added waste, high-ACOS, and harvest/protect target review sections.
+
 ## v1.17 - Sponsored Products Campaign Report
 - Added a Sponsored Products Campaign report analyzer.
 - Updated latest-report dispatch to identify campaign-level CSV exports.
