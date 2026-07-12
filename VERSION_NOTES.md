@@ -1,5 +1,11 @@
 # Version History
 
+## v1.19 - PPC Action Plan
+- Added a combined PPC action-plan generator across Search Term, Campaign, and Targeting reports.
+- Added a Raycast command that creates a clipboard-ready action plan from the latest Rubex reports.
+- Added a Notion connector contract for saving the PPC action plan to Decision & Report Log.
+- Added guarded bid/relevance review recommendations without automatic bid changes.
+
 ## v1.18 - Sponsored Products Targeting Report
 - Added a Sponsored Products Targeting report analyzer.
 - Updated latest-report dispatch to identify targeting-level XLSX exports.

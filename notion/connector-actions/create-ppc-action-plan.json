@@ -1,0 +1,40 @@
+{
+  "name": "Create PPC Action Plan",
+  "target": {
+    "workspace": "Farid OS Knowledge Vault",
+    "database": "Decision & Report Log",
+    "database_id": "32fc0cd4-92fc-4d53-bac1-795272eb4696",
+    "data_source_id": "6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3"
+  },
+  "properties": {
+    "Record": "PPC Action Plan - RUBEX - Week 27 2026",
+    "Type": "Decision",
+    "Area": ["Amazon Ads"],
+    "Impact": "High",
+    "Status": "In progress",
+    "Owner": "Farid",
+    "Decision Date": "2026-07-13",
+    "Review Date": "2026-07-20"
+  },
+  "content_contract": {
+    "required_sections": [
+      "Sources",
+      "Executive summary",
+      "Immediate action candidates",
+      "Protect / harvest candidates",
+      "Campaign context",
+      "Guardrails"
+    ],
+    "source_reports": [
+      "Sponsored Products Search Term report",
+      "Sponsored Products Campaign report",
+      "Sponsored Products Targeting report"
+    ],
+    "guardrails": [
+      "Do not execute bid or negative-keyword changes automatically.",
+      "Review margin, rank, and campaign role before applying changes.",
+      "Measure impact over the next 7 days after small-batch changes."
+    ]
+  },
+  "current_created_page": "https://app.notion.com/p/39b5ac9e52858101b4aac8881a4f27d6"
+}

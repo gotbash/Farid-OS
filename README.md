@@ -1,4 +1,4 @@
-# Farid OS v1.18
+# Farid OS v1.19
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -23,6 +23,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 5. Open the Notion Knowledge Vault from Raycast with the `vault` command.
 6. Use the v1.4 `Prepare Notion…` commands to copy review-ready Markdown into your workflow.
 7. Run `Validate Notion Record` before a reviewed connector write.
+8. Use `Create PPC Action Plan` after downloading Sponsored Products Search Term, Campaign, and Targeting reports into `~/Downloads/Rubex/Reports`.
 
 No API keys or credentials are stored in this repository. Seller Central links may require sign-in and can vary by marketplace/account.
 
@@ -59,5 +60,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.16 — PPC Search Term Notion Review:** direct WBR and RCA records for Sponsored Products Search Term analysis.
 - **v1.17 — Sponsored Products Campaign Report:** campaign-level spend, ACOS, and structure review.
 - **v1.18 — Sponsored Products Targeting Report:** target-level waste, high-ACOS, and harvest/protect review.
+- **v1.19 — PPC Action Plan:** combined Search Term, Campaign, and Targeting action-plan generator.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.
