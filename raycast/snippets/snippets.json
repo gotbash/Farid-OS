@@ -1,0 +1,12 @@
+[
+  {"name":"PPC audit input","text":"Audit this Amazon PPC data. Separate facts from hypotheses; analyze spend, sales, ACOS, TACoS, CTR, CVR, CPC, placements, search terms, and budget pacing. Return prioritized actions with expected impact and risk.","keyword":"!ppcaudit"},
+  {"name":"SQP funnel analysis","text":"Analyze this Search Query Performance data across impressions, clicks, cart adds, and purchases. Identify the largest funnel leaks, benchmark brand share by stage, and recommend the next three tests.","keyword":"!sqp"},
+  {"name":"Root cause analysis","text":"Observed change:\nEvidence:\nLikely causes (ranked):\nChecks required:\nImmediate action:\nLonger-term action:\nRisk / confidence:","keyword":"!rca"},
+  {"name":"Weekly business review","text":"Headline:\nKPI vs target and prior period:\nValidated drivers:\nRisks:\nActions / owner / due date:\nDecision needed:","keyword":"!wbr"},
+  {"name":"Daily pulse","text":"Yesterday's result:\nMaterial changes:\nInventory or budget risks:\nToday's top 3 priorities:\nEscalations:","keyword":"!pulse"},
+  {"name":"STAR story","text":"Situation:\nTask:\nAction (my decisions and leadership):\nResult (verified metrics):\nLearning:","keyword":"!star"},
+  {"name":"Decision record","text":"Decision:\nDate:\nContext:\nEvidence:\nOptions considered:\nChosen action and rationale:\nOwner / review date:\nExpected outcome:\nRisks:","keyword":"!decision"},
+  {"name":"Experience case","text":"Company / brand:\nChallenge:\nScale and scope:\nMy role:\nActions:\nVerified result:\nEvidence source:\nSkills demonstrated:","keyword":"!case"},
+  {"name":"Amazon playbook","text":"Objective:\nUse when:\nInputs required:\nSteps:\nDecision rules:\nGuardrails:\nOutput:\nReview cadence:","keyword":"!playbook"}
+]
+

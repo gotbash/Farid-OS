@@ -1,0 +1,13 @@
+[
+  {"name":"Amazon Seller Central","link":"https://sellercentral.amazon.com/home","description":"Open Seller Central","alias":"sc"},
+  {"name":"Amazon Ads Console","link":"https://advertising.amazon.com/","description":"Open Amazon Ads","alias":"ads"},
+  {"name":"Seller Central Business Reports","link":"https://sellercentral.amazon.com/business-reports","description":"Open Business Reports","alias":"br"},
+  {"name":"Seller Central Inventory","link":"https://sellercentral.amazon.com/inventory","description":"Open inventory","alias":"inventory"},
+  {"name":"Seller Central Account Health","link":"https://sellercentral.amazon.com/performance/dashboard","description":"Open Account Health","alias":"health"},
+  {"name":"Amazon Knowledge Vault","link":"https://app.notion.com/p/39b5ac9e52858161af90dce8cd758c4b","description":"Open Farid OS Knowledge Vault","alias":"vault"},
+  {"name":"Amazon Playbooks","link":"https://app.notion.com/p/39b5ac9e52858161af90dce8cd758c4b","description":"Open playbooks in Knowledge Vault","alias":"pb"},
+  {"name":"Experience Library","link":"https://app.notion.com/p/39b5ac9e52858161af90dce8cd758c4b","description":"Open experience cases","alias":"cases"},
+  {"name":"Interview Bank","link":"https://app.notion.com/p/39b5ac9e52858161af90dce8cd758c4b","description":"Open interview materials","alias":"ib"},
+  {"name":"Decision and Report Log","link":"https://app.notion.com/p/39b5ac9e52858161af90dce8cd758c4b","description":"Open decision and report log","alias":"dec"}
+]
+

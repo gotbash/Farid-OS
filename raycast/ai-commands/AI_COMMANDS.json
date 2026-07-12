@@ -1,0 +1,9 @@
+[
+  {"name":"Amazon PPC Audit","prompt":"Audit the supplied Amazon PPC data. Distinguish facts, hypotheses, and missing data. Return prioritized actions, impact, risk, and measurement plan."},
+  {"name":"TACoS Diagnosis","prompt":"Diagnose the TACoS movement using paid sales, organic sales, ad spend, CPC, CTR, CVR, rank, price, promotions, and inventory. Provide a ranked cause tree and tests."},
+  {"name":"SQP Analysis","prompt":"Analyze Search Query Performance by funnel stage and recommend the three highest-value actions."},
+  {"name":"Answer Using My Experience","prompt":"Use only the supplied Knowledge Vault evidence. Draft a concise first-person answer and flag any claim that lacks a source."},
+  {"name":"Create Notion WBR Entry","prompt":"Convert the supplied notes into a WBR with headline, KPI movement, validated drivers, risks, actions/owners/dates, and decisions needed."},
+  {"name":"Find Best Interview Case","prompt":"Match the interview question to the supplied Experience Library cases. Choose the strongest case, explain why, and draft a 60-90 second STAR answer without inventing metrics."}
+]
+
