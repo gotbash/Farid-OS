@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Analyze an Amazon Search Term Report CSV using only the Python standard library."""
+"""Analyze an Amazon Search Term Report CSV/XLSX using only the Python standard library."""
 
 from __future__ import annotations
 
@@ -8,6 +8,8 @@ import csv
 import math
 import re
 import sys
+import xml.etree.ElementTree as ET
+from zipfile import ZipFile
 from pathlib import Path
 
 
@@ -64,13 +66,51 @@ def fmt_money(value: float) -> str:
     return f"{value:,.2f}"
 
 
-def analyze(path: Path, acos_limit: float, waste_clicks: int) -> str:
+def cell_text(cell: ET.Element, shared_strings: list[str], namespace: dict[str, str]) -> str:
+    cell_type = cell.get("t")
+    if cell_type == "inlineStr":
+        return "".join(text.text or "" for text in cell.findall(".//a:t", namespace))
+    value = cell.find("a:v", namespace)
+    if value is None or value.text is None:
+        return ""
+    if cell_type == "s":
+        return shared_strings[int(value.text)]
+    return value.text
+
+
+def load_xlsx(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    namespace = {"a": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+    with ZipFile(path) as archive:
+        shared_strings: list[str] = []
+        if "xl/sharedStrings.xml" in archive.namelist():
+            root = ET.fromstring(archive.read("xl/sharedStrings.xml"))
+            for item in root.findall("a:si", namespace):
+                shared_strings.append("".join(text.text or "" for text in item.findall(".//a:t", namespace)))
+        root = ET.fromstring(archive.read("xl/worksheets/sheet1.xml"))
+        sheet_rows = root.findall(".//a:sheetData/a:row", namespace)
+        if not sheet_rows:
+            raise ValueError("XLSX contains no rows")
+        fieldnames = [cell_text(cell, shared_strings, namespace).strip() for cell in sheet_rows[0].findall("a:c", namespace)]
+        rows = []
+        for row in sheet_rows[1:]:
+            values = [cell_text(cell, shared_strings, namespace) for cell in row.findall("a:c", namespace)]
+            rows.append(dict(zip(fieldnames, values)))
+    return fieldnames, rows
+
+
+def load_table(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    if path.suffix.lower() == ".xlsx":
+        return load_xlsx(path)
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if not reader.fieldnames:
             raise ValueError("CSV has no header row")
-        columns = resolve_columns(reader.fieldnames)
-        rows = list(reader)
+        return reader.fieldnames, list(reader)
+
+
+def analyze(path: Path, acos_limit: float, waste_clicks: int) -> str:
+    fieldnames, rows = load_table(path)
+    columns = resolve_columns(fieldnames)
 
     if not rows:
         raise ValueError("CSV contains no data rows")
@@ -180,4 +220,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

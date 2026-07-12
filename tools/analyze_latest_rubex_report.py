@@ -6,7 +6,9 @@ from __future__ import annotations
 import argparse
 import csv
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
+from zipfile import ZipFile
 
 import catalog_performance_analyzer
 import search_term_analyzer
@@ -22,13 +24,46 @@ def normalize(value: str) -> str:
 
 
 def latest_csv(reports_dir: Path) -> Path:
-    files = [path for path in reports_dir.expanduser().glob("*.csv") if path.is_file()]
+    files = [
+        path
+        for path in reports_dir.expanduser().iterdir()
+        if path.is_file() and path.suffix.lower() in {".csv", ".xlsx"}
+    ]
     if not files:
-        raise ValueError(f"No CSV files found in {reports_dir}")
+        raise ValueError(f"No CSV/XLSX files found in {reports_dir}")
     return max(files, key=lambda path: path.stat().st_mtime)
 
 
+def xlsx_cell_text(cell: ET.Element, shared_strings: list[str], namespace: dict[str, str]) -> str:
+    cell_type = cell.get("t")
+    if cell_type == "inlineStr":
+        return "".join(text.text or "" for text in cell.findall(".//a:t", namespace))
+    value = cell.find("a:v", namespace)
+    if value is None or value.text is None:
+        return ""
+    if cell_type == "s":
+        return shared_strings[int(value.text)]
+    return value.text
+
+
+def read_xlsx_header(path: Path) -> list[str]:
+    namespace = {"a": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+    with ZipFile(path) as archive:
+        shared_strings: list[str] = []
+        if "xl/sharedStrings.xml" in archive.namelist():
+            root = ET.fromstring(archive.read("xl/sharedStrings.xml"))
+            for item in root.findall("a:si", namespace):
+                shared_strings.append("".join(text.text or "" for text in item.findall(".//a:t", namespace)))
+        root = ET.fromstring(archive.read("xl/worksheets/sheet1.xml"))
+        row = root.find(".//a:sheetData/a:row", namespace)
+        if row is None:
+            raise ValueError("XLSX contains no rows")
+        return [xlsx_cell_text(cell, shared_strings, namespace).strip() for cell in row.findall("a:c", namespace)]
+
+
 def read_header(path: Path) -> list[str]:
+    if path.suffix.lower() == ".xlsx":
+        return read_xlsx_header(path)
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.reader(handle)
         first_row = next(reader, None)

@@ -1,5 +1,10 @@
 # Version History
 
+## v1.15 - Sponsored Products Search Term XLSX
+- Added XLSX support for Amazon Ads Sponsored Products Search Term reports.
+- Updated latest-report intake to consider `.xlsx` files in `~/Downloads/Rubex/Reports`.
+- Kept parsing dependency-free by using Python standard-library ZIP/XML handling.
+
 ## v1.14 - Top Search Terms Intake
 - Added a streaming Brand Analytics Top Search Terms analyzer for large files.
 - Updated latest-report dispatch so Top Search Terms is not mistaken for an Ads Search Term Report.
