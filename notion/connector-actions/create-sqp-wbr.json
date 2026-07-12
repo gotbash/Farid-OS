@@ -1,0 +1,33 @@
+{
+  "parent": {
+    "data_source_id": "6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3"
+  },
+  "properties": {
+    "Record": "SQP WBR Summary - BRAND - WEEK",
+    "Type": "WBR",
+    "date:Decision Date:start": "YYYY-MM-DD",
+    "date:Decision Date:is_datetime": 0,
+    "Area": "[\"Amazon Ads\"]",
+    "Impact": "Medium",
+    "Owner": "Farid",
+    "Status": "In progress",
+    "date:Review Date:start": "YYYY-MM-DD",
+    "date:Review Date:is_datetime": 0
+  },
+  "content_contract": [
+    "Source",
+    "Executive summary",
+    "KPI snapshot",
+    "Top query concentration",
+    "Main funnel leak",
+    "Strong query clusters",
+    "Recommended actions",
+    "Decision needed",
+    "Notion-ready summary"
+  ],
+  "current_target": {
+    "database": "Decision & Report Log",
+    "data_source": "collection://6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3"
+  },
+  "guardrail": "SQP WBR records may contain explicit [MISSING] notes for unavailable SQP fields such as TACoS. Do not invent those fields."
+}

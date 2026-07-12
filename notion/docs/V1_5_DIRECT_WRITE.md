@@ -1,6 +1,6 @@
 # v1.5 Reviewed Direct Write
 
-v1.5 connects the Raycast preparation workflow to the authenticated Notion connector while retaining an explicit review gate.
+v1.5 connects the Raycast preparation workflow to the authenticated Notion connector while retaining an explicit review gate. SQP WBR records now also support Codex-side automatic creation in the Decision & Report Log when the user asks for direct Notion write.
 
 ## Flow
 
@@ -15,15 +15,18 @@ v1.5 connects the Raycast preparation workflow to the authenticated Notion conne
 - Database: Decision & Report Log
 - Data source: `collection://6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3`
 - Connector payload contract: `notion/connector-actions/create-wbr.json`
+- SQP WBR payload contract: `notion/connector-actions/create-sqp-wbr.json`
 
 ## Why validation is separate
 
 Raycast Script Commands cannot call the Codex Notion connector directly. Keeping validation local and submission connector-side avoids tokens in shell scripts and prevents unreviewed drafts from being written.
 
+For SQP WBR, Codex can write directly through the connected Notion MCP connector. The local Raycast command still copies Markdown to the clipboard and does not store Notion credentials.
+
 ## Submission policy
 
 - Never submit content containing `[MISSING]` or `[VERIFY]`.
+- Exception: SQP WBR may include explicit `[MISSING]` notes for fields that the SQP export cannot contain, such as TACoS.
 - Never infer owners, dates, sources, or performance figures.
 - Create one record per reporting period.
 - Preserve source links inside the page body.
-

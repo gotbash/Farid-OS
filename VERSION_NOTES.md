@@ -1,5 +1,10 @@
 # Version History
 
+## v1.11 - Notion SQP Auto-Write
+- Added a connector action contract for SQP WBR records.
+- Confirmed the target Decision & Report Log data source for automatic Notion creation.
+- Documented the difference between Codex connector auto-write and local Raycast clipboard capture.
+
 ## v1.10 - SQP WBR Capture
 - Added a Notion-ready WBR output mode to the SQP analyzer.
 - Added a Raycast command that turns an SQP CSV path into a clipboard-ready WBR summary.
