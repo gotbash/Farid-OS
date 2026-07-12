@@ -1,6 +1,12 @@
 # Version History
 
-## v1.5 - Reviewed Direct Write (Current)
+## v1.6 - Amazon Data Intake (Current)
+- Added a standard-library Search Term Report CSV analyzer.
+- Added data-quality checks, PPC metric calculations, and review candidate rules.
+- Added a Raycast command with clipboard and temporary Markdown output.
+- Added a labeled synthetic CSV for reproducible testing.
+
+## v1.5 - Reviewed Direct Write
 - Added a Raycast validation gate for WBR records.
 - Added a direct link to Decision & Report Log.
 - Added a connector-ready WBR property and content contract.

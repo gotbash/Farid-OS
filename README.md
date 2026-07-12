@@ -1,4 +1,4 @@
-# Farid OS v1.5
+# Farid OS v1.6
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -11,6 +11,8 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 - `notion/docs/` — Knowledge Vault map and operating guidance
 - `prompts/` — longer reusable Amazon and interview prompts
 - `notion/templates/` — reviewed WBR, decision, and metric-diagnostic records
+- `tools/` — reproducible local Amazon CSV analyzers
+- `examples/` — clearly labeled synthetic test data
 
 ## Install
 
@@ -44,5 +46,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.3 — Decision Engine + Report Factory:** ACOS/TACoS diagnostics, Daily Pulse, WBR, QBR, and RCA workflows.
 - **v1.4 — Notion Automation:** reviewed data contract, Automation Hub, and Raycast capture commands.
 - **v1.5 — Reviewed Direct Write:** local validation plus an authenticated Notion connector contract.
+- **v1.6 — Amazon Data Intake:** validated Search Term Report analysis and Notion-ready output.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.
