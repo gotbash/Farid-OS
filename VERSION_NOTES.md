@@ -1,5 +1,9 @@
 # Version History
 
+## v1.9 - Raycast Notion Capture Commands
+- Added Raycast script commands for Daily Pulse and RCA capture.
+- Commands copy Notion-ready Markdown to the clipboard for reviewed insertion into the Decision & Report Log.
+
 ## v1.8 - Notion Operating Templates
 - Added Notion-ready Daily Pulse and RCA templates.
 - Aligned the new templates with the Raycast Daily Pulse and RCA AI commands.
