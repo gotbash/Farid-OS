@@ -62,7 +62,7 @@ def fmt_int(value: float) -> str:
     return f"{value:,.0f}"
 
 
-def build_report(path: Path) -> tuple[list[dict[str, float | str]], list[tuple[int, str]], dict[str, float]]:
+def build_report(path: Path) -> tuple[list[dict[str, float | str]], list[tuple[int, str]], dict[str, float], int]:
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         sample = list(csv.reader(handle))
         if not sample:
@@ -97,11 +97,11 @@ def build_report(path: Path) -> tuple[list[dict[str, float | str]], list[tuple[i
         raise ValueError("No valid rows remain after validation")
 
     totals = {metric: sum(row[metric] for row in parsed) for metric in ("impressions", "clicks", "cart_adds", "purchases")}
-    return parsed, invalid, totals
+    return parsed, invalid, totals, len(rows)
 
 
 def analyze(path: Path) -> str:
-    parsed, invalid, totals = build_report(path)
+    parsed, invalid, totals, input_rows = build_report(path)
     top_queries = sorted(parsed, key=lambda row: row["impressions"], reverse=True)[:10]
     weak_queries = sorted(
         (row for row in parsed if row["impressions"] >= 1000 and row["clicks"] == 0),
@@ -127,7 +127,7 @@ def analyze(path: Path) -> str:
         "",
         "## Data quality",
         "",
-        f"- Input rows: {len(rows)}",
+        f"- Input rows: {input_rows}",
         f"- Valid rows: {len(parsed)}",
         f"- Invalid rows excluded: {len(invalid)}",
         "",
@@ -177,7 +177,7 @@ def analyze(path: Path) -> str:
 
 
 def wbr_summary(path: Path) -> str:
-    parsed, invalid, totals = build_report(path)
+    parsed, invalid, totals, input_rows = build_report(path)
     top_queries = sorted(parsed, key=lambda row: row["impressions"], reverse=True)[:6]
     strong_queries = sorted(
         (
@@ -202,7 +202,7 @@ def wbr_summary(path: Path) -> str:
         "",
         "## KPI snapshot",
         "",
-        f"- Input rows: {fmt_int(len(parsed) + len(invalid))}",
+        f"- Input rows: {fmt_int(input_rows)}",
         f"- Valid rows: {fmt_int(len(parsed))}",
         f"- Impressions: {fmt_int(totals['impressions'])}",
         f"- Clicks: {fmt_int(totals['clicks'])}",

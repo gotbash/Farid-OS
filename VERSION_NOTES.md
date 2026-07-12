@@ -1,5 +1,11 @@
 # Version History
 
+## v1.12 - Latest Rubex Report Intake
+- Added a dispatcher that finds the newest CSV in `~/Downloads/Rubex/Reports`.
+- Added report-type detection for SQP, Search Term Report, and Brand Analytics Trends.
+- Added a Raycast command for one-step latest-report analysis.
+- Fixed the SQP analyzer row-count regression introduced during WBR extraction.
+
 ## v1.11 - Notion SQP Auto-Write
 - Added a connector action contract for SQP WBR records.
 - Confirmed the target Decision & Report Log data source for automatic Notion creation.
