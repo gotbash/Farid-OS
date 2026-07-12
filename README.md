@@ -1,4 +1,4 @@
-# Farid OS v1.3
+# Farid OS v1.4
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -10,6 +10,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 - `raycast/script-commands/` — executable Raycast shell commands
 - `notion/docs/` — Knowledge Vault map and operating guidance
 - `prompts/` — longer reusable Amazon and interview prompts
+- `notion/templates/` — reviewed WBR, decision, and metric-diagnostic records
 
 ## Install
 
@@ -18,6 +19,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 3. Open **Raycast Settings → Extensions → Script Commands → Add Directories** and add `raycast/script-commands`.
 4. Create AI Commands from the Markdown files in `raycast/ai-commands/`. Raycast import formats can vary by app version, so `AI_COMMANDS.json` is supplied as a readable catalog and the Markdown files are the source of truth.
 5. Open the Notion Knowledge Vault from Raycast with the `vault` command.
+6. Use the v1.4 `Prepare Notion…` commands to copy review-ready Markdown into your workflow.
 
 No API keys or credentials are stored in this repository. Seller Central links may require sign-in and can vary by marketplace/account.
 
@@ -38,6 +40,7 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.0 — Amazon Core:** Amazon dashboards, analysis prompts, interview and executive workflows.
 - **v1.1 — Notion Knowledge Vault:** Notion-first playbooks, experience library, interview bank, and decision/report log.
 - **v1.2 — Raycast ↔ Notion Copilot:** Vault launch/search commands, Notion-oriented AI commands, and structured capture templates.
+- **v1.3 — Decision Engine + Report Factory:** ACOS/TACoS diagnostics, Daily Pulse, WBR, QBR, and RCA workflows.
+- **v1.4 — Notion Automation:** reviewed data contract, Automation Hub, and Raycast capture commands.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.
-
