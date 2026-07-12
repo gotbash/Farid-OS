@@ -1,9 +1,46 @@
 [
-  {"name":"Amazon PPC Audit","prompt":"Audit the supplied Amazon PPC data. Distinguish facts, hypotheses, and missing data. Return prioritized actions, impact, risk, and measurement plan."},
-  {"name":"TACoS Diagnosis","prompt":"Diagnose the TACoS movement using paid sales, organic sales, ad spend, CPC, CTR, CVR, rank, price, promotions, and inventory. Provide a ranked cause tree and tests."},
-  {"name":"SQP Analysis","prompt":"Analyze Search Query Performance by funnel stage and recommend the three highest-value actions."},
-  {"name":"Answer Using My Experience","prompt":"Use only the supplied Knowledge Vault evidence. Draft a concise first-person answer and flag any claim that lacks a source."},
-  {"name":"Create Notion WBR Entry","prompt":"Convert the supplied notes into a WBR with headline, KPI movement, validated drivers, risks, actions/owners/dates, and decisions needed."},
-  {"name":"Find Best Interview Case","prompt":"Match the interview question to the supplied Experience Library cases. Choose the strongest case, explain why, and draft a 60-90 second STAR answer without inventing metrics."}
+  {
+    "name": "Amazon PPC Audit",
+    "prompt": "Audit the supplied Amazon PPC data. Distinguish facts, hypotheses, and missing data. Return prioritized actions, impact, risk, and measurement plan."
+  },
+  {
+    "name": "TACoS Diagnosis",
+    "prompt": "Diagnose the TACoS movement using paid sales, organic sales, ad spend, CPC, CTR, CVR, rank, price, promotions, and inventory. Provide a ranked cause tree and tests."
+  },
+  {
+    "name": "SQP Analysis",
+    "prompt": "Analyze Search Query Performance by funnel stage and recommend the three highest-value actions."
+  },
+  {
+    "name": "Answer Using My Experience",
+    "prompt": "Use only the supplied Knowledge Vault evidence. Draft a concise first-person answer and flag any claim that lacks a source."
+  },
+  {
+    "name": "Create Notion WBR Entry",
+    "prompt": "Convert the supplied notes into a WBR with headline, KPI movement, validated drivers, risks, actions/owners/dates, and decisions needed."
+  },
+  {
+    "name": "Find Best Interview Case",
+    "prompt": "Match the interview question to the supplied Experience Library cases. Choose the strongest case, explain why, and draft a 60-90 second STAR answer without inventing metrics."
+  },
+  {
+    "name": "ACOS/TACoS Diagnostic",
+    "prompt": "Perform a deep-dive diagnostic on ACOS/TACoS movement. Identify root causes across ad spend efficiency, organic rank, pricing, promotions, and inventory levels. Provide a prioritized cause tree and recommend immediate reversible tests."
+  },
+  {
+    "name": "Daily Pulse Report",
+    "prompt": "Generate a Daily Pulse report from raw daily metrics. Highlight material changes from yesterday, budget or inventory risks, top 3 immediate priorities, and any escalations requiring management review."
+  },
+  {
+    "name": "WBR Report Generator",
+    "prompt": "Draft a Weekly Business Review (WBR) entry based on weekly metrics. Include a clear headline, KPI movement vs prior week/target, validated business drivers, risks, and a prioritized action plan with owners and dates."
+  },
+  {
+    "name": "QBR Strategy Builder",
+    "prompt": "Structure a Quarterly Business Review (QBR). Synthesize monthly/weekly data to show quarterly trends, strategic wins/losses, market share changes, and propose major strategic initiatives and budget allocations for the upcoming quarter."
+  },
+  {
+    "name": "RCA Framework",
+    "prompt": "Run a Root Cause Analysis (RCA) on the supplied issue. Use the 5 Whys method to separate symptoms from underlying system or process failures. Output the confirmed root cause, immediate mitigation, and long-term preventative measures."
+  }
 ]
-

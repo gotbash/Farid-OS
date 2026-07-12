@@ -1,4 +1,4 @@
-# Farid OS
+# Farid OS v1.3
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 

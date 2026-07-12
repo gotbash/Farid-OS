@@ -1,18 +1,21 @@
-# Version notes
+# Version History
 
-## v1.2
+## v1.3 - Decision Engine & Report Factory (Current)
+- Added new AI Commands and Snippets for comprehensive business reporting and diagnostics:
+  - ACOS/TACoS Diagnostic
+  - Daily Pulse Report
+  - WBR (Weekly Business Review) Report Generator
+  - QBR (Quarterly Business Review) Strategy Builder
+  - RCA (Root Cause Analysis) Framework
+- Consolidated Snippets (!ppcaudit, !wbr, !star, !qbr, !acos) for fast operational execution.
 
-- Added Raycast commands for the Notion Knowledge Vault.
-- Added AI workflows for experience-based answers, WBRs, decisions, playbooks, and STAR stories.
-- Added structured Notion capture snippets.
+## v1.2 - Raycast Native
+- Migrated core tools to native Raycast Script Commands
+- Packaged Knowledge Vault and Quicklinks for rapid deployment
 
-## v1.1
+## v1.1 - The Command Center
+- First iteration of structured prompts and search integration
+- Amazon workflows standardized
 
-- Defined Knowledge Vault sections: Amazon Playbooks, Experience Library, Interview Bank, and Decision & Report Log.
-- Added source-verification guidance for performance claims.
-
-## v1.0
-
-- Added Amazon Core quicklinks and workspace scripts.
-- Added PPC, SQP, TACoS, listing, executive reporting, and interview prompts.
-
+## v1.0 - Genesis
+- Foundational Knowledge Vault setup and basic AI interaction models
