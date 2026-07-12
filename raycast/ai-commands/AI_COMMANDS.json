@@ -12,6 +12,10 @@
     "prompt": "Analyze Search Query Performance by funnel stage and recommend the three highest-value actions."
   },
   {
+    "name": "SQP WBR Summary",
+    "prompt": "Turn the supplied Amazon Search Query Performance export into a concise Weekly Business Review summary. Include executive summary, KPI snapshot, top query concentration, funnel leak, strong query clusters, risks and gaps, recommended actions, decision needed, and a Notion-ready summary. Use only evidence from the export and mark missing inputs explicitly."
+  },
+  {
     "name": "Answer Using My Experience",
     "prompt": "Use only the supplied Knowledge Vault evidence. Draft a concise first-person answer and flag any claim that lacks a source."
   },
