@@ -1,0 +1,28 @@
+{
+  "parent": {
+    "data_source_id": "6ac3e2fe-3d17-49c4-877f-5a0d2ea4e4b3"
+  },
+  "properties": {
+    "Record": "WBR — YYYY-MM-DD — Headline",
+    "Type": "WBR",
+    "date:Decision Date:start": "YYYY-MM-DD",
+    "date:Decision Date:is_datetime": 0,
+    "Area": "[\"Amazon Ads\"]",
+    "Impact": "Medium",
+    "Owner": "Farid",
+    "Status": "Not started",
+    "date:Review Date:start": "YYYY-MM-DD",
+    "date:Review Date:is_datetime": 0
+  },
+  "content_contract": [
+    "Headline",
+    "KPI vs target / prior period",
+    "Validated drivers",
+    "Risks",
+    "Actions — owner — due date",
+    "Decision needed",
+    "Sources"
+  ],
+  "guardrail": "Reject any record containing [MISSING] or [VERIFY]."
+}
+

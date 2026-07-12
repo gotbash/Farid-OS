@@ -1,6 +1,12 @@
 # Version History
 
-## v1.4 - Notion Automation (Current)
+## v1.5 - Reviewed Direct Write (Current)
+- Added a Raycast validation gate for WBR records.
+- Added a direct link to Decision & Report Log.
+- Added a connector-ready WBR property and content contract.
+- Added a reviewed WBR AI command with strict missing-data rules.
+
+## v1.4 - Notion Automation
 - Added the Notion Automation Hub inside the Knowledge Vault.
 - Added Raycast commands for WBR, decision, and metric-diagnostic capture.
 - Added Notion-ready templates and the Decision & Report Log data contract.

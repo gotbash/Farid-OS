@@ -1,4 +1,4 @@
-# Farid OS v1.4
+# Farid OS v1.5
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -20,6 +20,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 4. Create AI Commands from the Markdown files in `raycast/ai-commands/`. Raycast import formats can vary by app version, so `AI_COMMANDS.json` is supplied as a readable catalog and the Markdown files are the source of truth.
 5. Open the Notion Knowledge Vault from Raycast with the `vault` command.
 6. Use the v1.4 `Prepare Notion…` commands to copy review-ready Markdown into your workflow.
+7. Run `Validate Notion Record` before a reviewed connector write.
 
 No API keys or credentials are stored in this repository. Seller Central links may require sign-in and can vary by marketplace/account.
 
@@ -42,5 +43,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.2 — Raycast ↔ Notion Copilot:** Vault launch/search commands, Notion-oriented AI commands, and structured capture templates.
 - **v1.3 — Decision Engine + Report Factory:** ACOS/TACoS diagnostics, Daily Pulse, WBR, QBR, and RCA workflows.
 - **v1.4 — Notion Automation:** reviewed data contract, Automation Hub, and Raycast capture commands.
+- **v1.5 — Reviewed Direct Write:** local validation plus an authenticated Notion connector contract.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

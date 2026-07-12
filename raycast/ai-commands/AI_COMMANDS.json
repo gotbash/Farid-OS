@@ -42,5 +42,9 @@
   {
     "name": "RCA Framework",
     "prompt": "Run a Root Cause Analysis (RCA) on the supplied issue. Use the 5 Whys method to separate symptoms from underlying system or process failures. Output the confirmed root cause, immediate mitigation, and long-term preventative measures."
+  },
+  {
+    "name": "Create Reviewed Notion WBR",
+    "prompt": "Convert supplied Amazon notes into a final Notion WBR with headline, KPI vs target/prior period, validated drivers, risks, actions with owner/date, decision needed, and sources. Never invent data. Mark gaps [MISSING] and unsupported claims [VERIFY]; the record is not ready until all markers are resolved."
   }
 ]
