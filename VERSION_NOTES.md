@@ -1,5 +1,10 @@
 # Version History
 
+## v1.17 - Sponsored Products Campaign Report
+- Added a Sponsored Products Campaign report analyzer.
+- Updated latest-report dispatch to identify campaign-level CSV exports.
+- Added campaign-level spend, ACOS, zero-sales, and strong-campaign review sections.
+
 ## v1.16 - PPC Search Term Notion Review
 - Added a Notion connector contract for PPC Search Term WBR and RCA creation.
 - Created separate WBR and RCA records from the Sponsored Products Search Term report.

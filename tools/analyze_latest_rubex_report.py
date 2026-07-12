@@ -10,6 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from zipfile import ZipFile
 
+import campaign_analyzer
 import catalog_performance_analyzer
 import search_term_analyzer
 import sqp_analyzer
@@ -71,7 +72,7 @@ def read_header(path: Path) -> list[str]:
     if first_row is None:
         raise ValueError("CSV has no rows")
     first_cell = normalize(first_row[0]) if first_row else ""
-    known_first_columns = {"search query", "asin title", "date", "customer search term", "search term", "search frequency rank"}
+    known_first_columns = {"search query", "asin title", "date", "customer search term", "search term", "search frequency rank", "start date"}
     if first_cell not in known_first_columns:
         if second_row and any(normalize(cell) in known_first_columns for cell in second_row):
             return second_row
@@ -86,6 +87,8 @@ def detect_report_type(path: Path) -> str:
         return "search_catalog_performance"
     if {"search frequency rank", "search term", "top clicked brand #1", "top clicked product #1: asin"}.issubset(header):
         return "top_search_terms"
+    if {"campaign name", "budget amount", "targeting type", "impressions", "clicks", "spend"}.issubset(header):
+        return "campaign"
     if {"customer search term", "impressions", "clicks"}.issubset(header) or {"search term", "impressions", "clicks"}.issubset(header):
         return "search_term"
     if {"date", "customers in awareness", "customers in consideration", "branded search customers", "branded search ratio"}.issubset(header):
@@ -101,6 +104,8 @@ def analyze(path: Path) -> tuple[str, str]:
         return report_type, catalog_performance_analyzer.analyze(path)
     if report_type == "top_search_terms":
         return report_type, top_search_terms_analyzer.analyze(path, limit=100)
+    if report_type == "campaign":
+        return report_type, campaign_analyzer.analyze(path)
     if report_type == "search_term":
         return report_type, search_term_analyzer.analyze(path, acos_limit=0.40, waste_clicks=8)
     raise ValueError(f"Unsupported report type: {report_type}. Add a dedicated analyzer before using this file.")
