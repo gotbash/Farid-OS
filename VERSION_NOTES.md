@@ -1,5 +1,17 @@
 # Version History
 
+## v2.2 - Baseline Forecast Engine
+- Added a weekly low/base/high forecast generator from local warehouse PPC data.
+- Added a `forecasts` table and Raycast command for forecast creation.
+- Added a competitor configuration template to prepare ASIN tracking.
+
+## v2.1 - Data Warehouse Foundation
+- Added a local SQLite warehouse at `data/farid_os.db` for supported Rubex/Amazon reports.
+- Added an importer that scans `~/Downloads/Rubex/Reports`, detects report types, deduplicates files by SHA-256, and loads normalized tables.
+- Added warehouse tables for Sponsored Products Search Terms, Campaigns, Targeting, SQP queries, and Search Catalog ASINs.
+- Added a Raycast command for one-step warehouse import and clipboard-ready summary output.
+- Added warehouse documentation and Git ignores for local business data.
+
 ## v1.19 - PPC Action Plan
 - Added a combined PPC action-plan generator across Search Term, Campaign, and Targeting reports.
 - Added a Raycast command that creates a clipboard-ready action plan from the latest Rubex reports.

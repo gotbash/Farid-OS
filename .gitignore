@@ -6,4 +6,7 @@ node_modules/
 dist/
 *.log
 *.zip
-
+data/
+*.db
+*.sqlite
+*.sqlite3

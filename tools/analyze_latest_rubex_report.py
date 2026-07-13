@@ -90,10 +90,10 @@ def detect_report_type(path: Path) -> str:
         return "top_search_terms"
     if {"campaign name", "budget amount", "targeting type", "impressions", "clicks", "spend"}.issubset(header):
         return "campaign"
-    if {"campaign name", "ad group name", "targeting", "match type", "impressions", "clicks", "spend"}.issubset(header):
-        return "targeting"
     if {"customer search term", "impressions", "clicks"}.issubset(header) or {"search term", "impressions", "clicks"}.issubset(header):
         return "search_term"
+    if {"campaign name", "ad group name", "targeting", "match type", "impressions", "clicks", "spend"}.issubset(header):
+        return "targeting"
     if {"date", "customers in awareness", "customers in consideration", "branded search customers", "branded search ratio"}.issubset(header):
         return "brand_analytics_trends"
     raise ValueError("Unsupported CSV schema: " + ", ".join(sorted(header)[:12]))

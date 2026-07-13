@@ -1,0 +1,21 @@
+{
+  "brand": "RUBEX",
+  "marketplace": "US",
+  "products": [
+    {
+      "asin": "B07VRTQJL8",
+      "product_name": "RUBEX Trading Card Sleeves",
+      "target_acos": null,
+      "breakeven_acos": null,
+      "unit_margin": null,
+      "competitors": [
+        {
+          "competitor_asin": "REPLACE_WITH_COMPETITOR_ASIN",
+          "competitor_name": "Competitor product name",
+          "brand": "Competitor brand",
+          "source": "manual"
+        }
+      ]
+    }
+  ]
+}
