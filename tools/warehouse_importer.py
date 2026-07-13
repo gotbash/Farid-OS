@@ -211,6 +211,50 @@ def init_schema(conn: sqlite3.Connection) -> None:
             status TEXT NOT NULL DEFAULT 'open'
         );
 
+        CREATE TABLE IF NOT EXISTS keyword_candidates (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            created_at TEXT NOT NULL,
+            keyword TEXT NOT NULL,
+            source TEXT NOT NULL,
+            action TEXT NOT NULL,
+            match_type TEXT,
+            score REAL NOT NULL,
+            impressions REAL,
+            clicks REAL,
+            spend REAL,
+            sales REAL,
+            orders REAL,
+            acos REAL,
+            cvr REAL,
+            reason TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS negative_candidates (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            created_at TEXT NOT NULL,
+            keyword TEXT NOT NULL,
+            source TEXT NOT NULL,
+            match_type TEXT,
+            score REAL NOT NULL,
+            clicks REAL,
+            spend REAL,
+            sales REAL,
+            orders REAL,
+            reason TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS keyword_actions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            created_at TEXT NOT NULL,
+            keyword TEXT NOT NULL,
+            action TEXT NOT NULL,
+            match_type TEXT,
+            campaign TEXT,
+            ad_group TEXT,
+            status TEXT NOT NULL DEFAULT 'review',
+            reason TEXT NOT NULL
+        );
+
         CREATE VIEW IF NOT EXISTS latest_report_files AS
             SELECT rf.*
             FROM report_files rf
@@ -232,6 +276,9 @@ def init_schema(conn: sqlite3.Connection) -> None:
         CREATE INDEX IF NOT EXISTS idx_competitor_snapshots_asin ON competitor_snapshots(competitor_asin);
         CREATE INDEX IF NOT EXISTS idx_forecasts_created_at ON forecasts(created_at);
         CREATE INDEX IF NOT EXISTS idx_alerts_status ON alerts(status);
+        CREATE INDEX IF NOT EXISTS idx_keyword_candidates_keyword ON keyword_candidates(keyword);
+        CREATE INDEX IF NOT EXISTS idx_negative_candidates_keyword ON negative_candidates(keyword);
+        CREATE INDEX IF NOT EXISTS idx_keyword_actions_keyword ON keyword_actions(keyword);
         """
     )
     existing_columns = {

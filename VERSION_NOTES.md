@@ -1,5 +1,12 @@
 # Version History
 
+## v2.5 - Keyword Intelligence Engine
+- Added warehouse tables for keyword candidates, negative candidates, and keyword actions.
+- Added a keyword intelligence engine using PPC Search Term and SQP data.
+- Added relevant keyword, long-tail, harvest, negative, bid-down, and listing SEO classifications.
+- Added review-ready CSV outputs for harvest and negative keyword candidates.
+- Added Raycast commands for keyword intelligence reports and CSV generation.
+
 ## v2.4.1 - Amazon.com Research Guardrail
 - Added US marketplace and `amazon.com` defaults to competitor research templates and snapshots.
 - Added Amazon.com search URLs to generated competitor research templates.

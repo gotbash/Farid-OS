@@ -55,6 +55,9 @@ Unsupported reports are skipped until a dedicated parser is added.
 - `competitor_snapshots`
 - `forecasts`
 - `alerts`
+- `keyword_candidates`
+- `negative_candidates`
+- `keyword_actions`
 - `latest_report_files` view
 
 ## Design rules
@@ -174,3 +177,43 @@ Threat scoring uses:
 - coupon activity;
 - organic rank;
 - sponsored rank.
+
+## Keyword intelligence commands
+
+Create the full keyword intelligence report:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 tools/keyword_intelligence.py
+```
+
+Raycast:
+
+```text
+Create Keyword Intelligence Report
+```
+
+Create review-ready negative candidates:
+
+```text
+Create Negative Keyword Candidates
+```
+
+Create review-ready harvest candidates:
+
+```text
+Create Keyword Harvest CSV
+```
+
+The keyword engine uses the latest Sponsored Products Search Term report plus SQP demand confirmation where available. Outputs are review-ready only. It does not upload bulk files or make bid/negative changes automatically.
+
+Default negative-candidate threshold is intentionally review-oriented: at least 2 clicks, at least $1 spend, and zero attributed sales. Raise the threshold when you want stricter negatives.
+
+Current action classes:
+
+- `HARVEST_EXACT`
+- `HARVEST_PHRASE`
+- `NEGATIVE_EXACT`
+- `NEGATIVE_PHRASE`
+- `BID_DOWN`
+- `EXPAND_LISTING_SEO`
+- `MONITOR`
