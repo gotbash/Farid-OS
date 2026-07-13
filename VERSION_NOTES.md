@@ -1,5 +1,11 @@
 # Version History
 
+## v2.6 - Product Profile + Intent Rules
+- Added product intent profiles with core terms, must-include terms, optional terms, irrelevant terms, and negative-intent terms.
+- Added a `product_profiles` warehouse table and product profile importer.
+- Updated keyword intelligence scoring to read product profiles instead of relying only on hardcoded card-sleeve hints.
+- Added a Raycast command for importing and reviewing product profiles.
+
 ## v2.5 - Keyword Intelligence Engine
 - Added warehouse tables for keyword candidates, negative candidates, and keyword actions.
 - Added a keyword intelligence engine using PPC Search Term and SQP data.

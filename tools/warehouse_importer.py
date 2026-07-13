@@ -160,6 +160,23 @@ def init_schema(conn: sqlite3.Connection) -> None:
             notes TEXT
         );
 
+        CREATE TABLE IF NOT EXISTS product_profiles (
+            asin TEXT PRIMARY KEY,
+            sku TEXT,
+            product_name TEXT NOT NULL,
+            brand TEXT DEFAULT 'RUBEX',
+            target_customer TEXT,
+            core_terms TEXT NOT NULL DEFAULT '[]',
+            must_include TEXT NOT NULL DEFAULT '[]',
+            optional_terms TEXT NOT NULL DEFAULT '[]',
+            irrelevant_terms TEXT NOT NULL DEFAULT '[]',
+            negative_intent_terms TEXT NOT NULL DEFAULT '[]',
+            target_acos REAL,
+            breakeven_acos REAL,
+            notes TEXT,
+            active INTEGER NOT NULL DEFAULT 1
+        );
+
         CREATE TABLE IF NOT EXISTS competitors (
             competitor_asin TEXT PRIMARY KEY,
             competitor_name TEXT,
@@ -279,6 +296,7 @@ def init_schema(conn: sqlite3.Connection) -> None:
         CREATE INDEX IF NOT EXISTS idx_keyword_candidates_keyword ON keyword_candidates(keyword);
         CREATE INDEX IF NOT EXISTS idx_negative_candidates_keyword ON negative_candidates(keyword);
         CREATE INDEX IF NOT EXISTS idx_keyword_actions_keyword ON keyword_actions(keyword);
+        CREATE INDEX IF NOT EXISTS idx_product_profiles_active ON product_profiles(active);
         """
     )
     existing_columns = {

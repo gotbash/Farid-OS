@@ -1,4 +1,4 @@
-# Farid OS v2.5
+# Farid OS v2.6
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -31,6 +31,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 11. Use `Import Competitors Config`, `Import Competitor Snapshot`, and `Create Competitor Report` to track competitor movement.
 12. Use `Create Competitor Research Template` for an Amazon.com keyword, fill the CSV, then run `Create Competitor Research Report`.
 13. Use `Create Keyword Intelligence Report`, `Create Negative Keyword Candidates`, and `Create Keyword Harvest CSV` for PPC keyword mining.
+14. Use `Import Product Profiles` to load product-specific intent rules before keyword mining.
 
 No API keys or credentials are stored in this repository. Seller Central links may require sign-in and can vary by marketplace/account.
 
@@ -74,5 +75,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v2.4 — Competitor Research Builder:** keyword templates, threat scoring, and research action reports.
 - **v2.4.1 — Amazon.com Research Guardrail:** competitor research templates default to US / amazon.com search.
 - **v2.5 — Keyword Intelligence Engine:** relevant keyword mining, long-tail detection, negatives, harvest CSVs, and review-ready actions.
+- **v2.6 — Product Profile + Intent Rules:** product-aware relevance, negative-intent, and keyword scoring profiles.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

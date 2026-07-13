@@ -11,4 +11,5 @@ data/
 *.sqlite
 *.sqlite3
 config/competitors.local.json
+config/product-profiles.local.json
 snapshots/

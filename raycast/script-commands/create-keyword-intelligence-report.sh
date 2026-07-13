@@ -11,6 +11,7 @@ CSV_PATH=/tmp/farid-os-keyword-actions.csv
 
 cd "$ROOT_DIR" || exit 1
 PYTHONDONTWRITEBYTECODE=1 python3 tools/warehouse_importer.py >/dev/null || exit $?
+PYTHONDONTWRITEBYTECODE=1 python3 tools/product_profile.py import >/dev/null || exit $?
 PYTHONDONTWRITEBYTECODE=1 python3 tools/keyword_intelligence.py --output "$OUTPUT_PATH" --csv-output "$CSV_PATH" >/dev/null || exit $?
 pbcopy < "$OUTPUT_PATH"
 cat "$OUTPUT_PATH"

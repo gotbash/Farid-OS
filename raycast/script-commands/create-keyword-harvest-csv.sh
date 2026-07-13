@@ -10,6 +10,7 @@ CSV_PATH=/tmp/farid-os-keyword-harvest.csv
 
 cd "$ROOT_DIR" || exit 1
 PYTHONDONTWRITEBYTECODE=1 python3 tools/warehouse_importer.py >/dev/null || exit $?
+PYTHONDONTWRITEBYTECODE=1 python3 tools/product_profile.py import >/dev/null || exit $?
 PYTHONDONTWRITEBYTECODE=1 python3 tools/keyword_intelligence.py --csv-output /tmp/farid-os-keyword-actions-all.csv >/dev/null || exit $?
 PYTHONDONTWRITEBYTECODE=1 python3 - <<'PY' > "$CSV_PATH"
 import csv

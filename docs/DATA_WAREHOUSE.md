@@ -51,6 +51,7 @@ Unsupported reports are skipped until a dedicated parser is added.
 - `sqp_queries`
 - `catalog_asins`
 - `products`
+- `product_profiles`
 - `competitors`
 - `competitor_snapshots`
 - `forecasts`
@@ -180,6 +181,32 @@ Threat scoring uses:
 
 ## Keyword intelligence commands
 
+Before keyword mining, import product profiles:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 tools/product_profile.py import
+```
+
+Raycast:
+
+```text
+Import Product Profiles
+```
+
+Default profile file:
+
+```text
+config/product-profiles.example.json
+```
+
+For private product tuning, create:
+
+```text
+config/product-profiles.local.json
+```
+
+The local profile file is ignored by Git.
+
 Create the full keyword intelligence report:
 
 ```bash
@@ -204,7 +231,7 @@ Create review-ready harvest candidates:
 Create Keyword Harvest CSV
 ```
 
-The keyword engine uses the latest Sponsored Products Search Term report plus SQP demand confirmation where available. Outputs are review-ready only. It does not upload bulk files or make bid/negative changes automatically.
+The keyword engine uses the active product profile, latest Sponsored Products Search Term report, and SQP demand confirmation where available. Outputs are review-ready only. It does not upload bulk files or make bid/negative changes automatically.
 
 Default negative-candidate threshold is intentionally review-oriented: at least 2 clicks, at least $1 spend, and zero attributed sales. Raise the threshold when you want stricter negatives.
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import sqlite3
 import sys
@@ -32,6 +33,15 @@ IRRELEVANT_HINTS = {
     "non-glare sheet protector",
 }
 PRODUCT_HINTS = {"card", "cards", "sleeve", "sleeves", "binder", "trading", "baseball"}
+DEFAULT_PROFILE = {
+    "product_name": "Fallback Card Sleeves Profile",
+    "core_terms": ["card sleeves", "trading card sleeves", "card sleeves for binder"],
+    "must_include": ["card", "sleeves"],
+    "optional_terms": ["binder", "trading", "baseball"],
+    "irrelevant_terms": sorted(IRRELEVANT_HINTS),
+    "negative_intent_terms": ["document", "letter", "office"],
+    "target_acos": 0.35,
+}
 
 
 @dataclass
@@ -79,24 +89,54 @@ def is_long_tail(keyword: str) -> bool:
     return len(tokens(keyword)) >= 4
 
 
-def relevance_score(keyword: str) -> tuple[float, list[str]]:
+def load_active_profile(conn: sqlite3.Connection, asin: str | None = None) -> dict[str, Any]:
+    if asin:
+        row = conn.execute("SELECT * FROM product_profiles WHERE asin = ? AND active = 1", (asin,)).fetchone()
+    else:
+        row = conn.execute("SELECT * FROM product_profiles WHERE active = 1 ORDER BY product_name LIMIT 1").fetchone()
+    if not row:
+        return DEFAULT_PROFILE
+    return {
+        "asin": row["asin"],
+        "product_name": row["product_name"],
+        "core_terms": json.loads(row["core_terms"]),
+        "must_include": json.loads(row["must_include"]),
+        "optional_terms": json.loads(row["optional_terms"]),
+        "irrelevant_terms": json.loads(row["irrelevant_terms"]),
+        "negative_intent_terms": json.loads(row["negative_intent_terms"]),
+        "target_acos": row["target_acos"],
+    }
+
+
+def relevance_score(keyword: str, profile: dict[str, Any]) -> tuple[float, list[str]]:
     normalized = normalize_keyword(keyword)
     terms = set(tokens(keyword))
     score = 0.0
     reasons = []
-    product_matches = terms & PRODUCT_HINTS
+    profile_terms = {token for phrase in profile.get("core_terms", []) + profile.get("must_include", []) + profile.get("optional_terms", []) for token in tokens(phrase)}
+    product_matches = terms & profile_terms
     if product_matches:
         score += min(len(product_matches), 3)
-        reasons.append("product-term match")
-    if "card" in terms and ("sleeve" in terms or "sleeves" in terms):
+        reasons.append("profile-term match")
+    for core_term in profile.get("core_terms", []):
+        if normalize_keyword(core_term) in normalized:
+            score += 3
+            reasons.append(f"core intent: {core_term}")
+            break
+    must_terms = {token for term in profile.get("must_include", []) for token in tokens(term)}
+    if must_terms and must_terms.issubset(terms):
         score += 3
-        reasons.append("core card sleeve intent")
-    if "binder" in terms and ("card" in terms or "cards" in terms):
+        reasons.append("must-include intent match")
+    optional_matches = terms & {token for term in profile.get("optional_terms", []) for token in tokens(term)}
+    if optional_matches:
         score += 1
-        reasons.append("binder-card intent")
-    if any(hint in normalized for hint in IRRELEVANT_HINTS):
+        reasons.append("optional intent match")
+    if any(normalize_keyword(hint) in normalized for hint in profile.get("irrelevant_terms", [])):
         score -= 4
-        reasons.append("document/sheet-protector intent risk")
+        reasons.append("profile irrelevant intent risk")
+    if any(normalize_keyword(hint) in normalized for hint in profile.get("negative_intent_terms", [])):
+        score -= 2
+        reasons.append("negative-intent term")
     if is_long_tail(keyword):
         score += 1
         reasons.append("long-tail query")
@@ -142,7 +182,7 @@ def sqp_lookup(conn: sqlite3.Connection) -> dict[str, sqlite3.Row]:
     }
 
 
-def classify(row: sqlite3.Row, sqp: dict[str, sqlite3.Row], target_acos: float, waste_clicks: int, waste_spend: float) -> Candidate:
+def classify(row: sqlite3.Row, sqp: dict[str, sqlite3.Row], target_acos: float, waste_clicks: int, waste_spend: float, profile: dict[str, Any]) -> Candidate:
     keyword = row["keyword"]
     impressions = float(row["impressions"] or 0)
     clicks = float(row["clicks"] or 0)
@@ -151,7 +191,7 @@ def classify(row: sqlite3.Row, sqp: dict[str, sqlite3.Row], target_acos: float, 
     orders = float(row["orders"] or 0)
     acos = pct(spend, sales)
     cvr = pct(orders, clicks)
-    rel_score, rel_reasons = relevance_score(keyword)
+    rel_score, rel_reasons = relevance_score(keyword, profile)
     sqp_row = sqp.get(normalize_keyword(keyword))
     sqp_bonus = 0.0
     if sqp_row:
@@ -219,13 +259,15 @@ def classify(row: sqlite3.Row, sqp: dict[str, sqlite3.Row], target_acos: float, 
     )
 
 
-def build_candidates(conn: sqlite3.Connection, target_acos: float, waste_clicks: int, waste_spend: float) -> list[Candidate]:
+def build_candidates(conn: sqlite3.Connection, target_acos: float, waste_clicks: int, waste_spend: float, profile_asin: str | None = None) -> tuple[list[Candidate], dict[str, Any]]:
     lookup = sqp_lookup(conn)
+    profile = load_active_profile(conn, profile_asin)
+    effective_target_acos = float(profile.get("target_acos") or target_acos)
     return [
-        classify(row, lookup, target_acos, waste_clicks, waste_spend)
+        classify(row, lookup, effective_target_acos, waste_clicks, waste_spend, profile)
         for row in latest_search_terms(conn)
         if normalize_keyword(row["keyword"])
-    ]
+    ], profile
 
 
 def save_candidates(conn: sqlite3.Connection, candidates: list[Candidate]) -> None:
@@ -302,7 +344,7 @@ def section(lines: list[str], title: str, rows: list[Candidate], limit: int = 20
         )
 
 
-def build_report(candidates: list[Candidate]) -> str:
+def build_report(candidates: list[Candidate], profile: dict[str, Any]) -> str:
     harvest_exact = sorted([c for c in candidates if c.action == "HARVEST_EXACT"], key=lambda c: c.score, reverse=True)
     harvest_phrase = sorted([c for c in candidates if c.action == "HARVEST_PHRASE"], key=lambda c: c.score, reverse=True)
     long_tail = sorted([c for c in candidates if is_long_tail(c.keyword) and c.action in {"HARVEST_EXACT", "HARVEST_PHRASE", "EXPAND_LISTING_SEO"}], key=lambda c: c.score, reverse=True)
@@ -311,6 +353,14 @@ def build_report(candidates: list[Candidate]) -> str:
     seo = sorted([c for c in candidates if c.action == "EXPAND_LISTING_SEO"], key=lambda c: c.impressions, reverse=True)
     lines = [
         "# Keyword Intelligence Report",
+        "",
+        "## Product profile",
+        "",
+        f"- Product: {profile.get('product_name', 'n/a')}",
+        f"- ASIN: {profile.get('asin', 'n/a')}",
+        f"- Core terms: {', '.join(profile.get('core_terms', []))}",
+        f"- Must include: {', '.join(profile.get('must_include', []))}",
+        f"- Irrelevant terms: {', '.join(profile.get('irrelevant_terms', [])[:10])}",
         "",
         "## Summary",
         "",
@@ -368,16 +418,17 @@ def main() -> int:
     parser.add_argument("--target-acos", type=float, default=0.35)
     parser.add_argument("--waste-clicks", type=int, default=2)
     parser.add_argument("--waste-spend", type=float, default=1.0)
+    parser.add_argument("--profile-asin")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--csv-output", type=Path)
     parser.add_argument("--no-save", action="store_true")
     args = parser.parse_args()
     try:
         conn = connect(args.db)
-        candidates = build_candidates(conn, args.target_acos, args.waste_clicks, args.waste_spend)
+        candidates, profile = build_candidates(conn, args.target_acos, args.waste_clicks, args.waste_spend, args.profile_asin)
         if not args.no_save:
             save_candidates(conn, candidates)
-        report = build_report(candidates)
+        report = build_report(candidates, profile)
         if args.csv_output:
             print(write_csv(args.csv_output, candidates))
         if args.output:

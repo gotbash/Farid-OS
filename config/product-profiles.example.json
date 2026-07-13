@@ -1,0 +1,49 @@
+{
+  "profiles": [
+    {
+      "asin": "B07VRTQJL8",
+      "sku": null,
+      "product_name": "RUBEX Trading Card Sleeves",
+      "brand": "RUBEX",
+      "target_customer": "Collectors of trading, baseball, sports, and Pokemon cards who need binder-compatible protective card sleeves.",
+      "core_terms": [
+        "card sleeves",
+        "trading card sleeves",
+        "card sleeves for binder",
+        "binder card sleeves"
+      ],
+      "must_include": [
+        "card",
+        "sleeves"
+      ],
+      "optional_terms": [
+        "binder",
+        "trading",
+        "baseball",
+        "pokemon",
+        "sports",
+        "9 pocket",
+        "top loaders"
+      ],
+      "irrelevant_terms": [
+        "document",
+        "documents",
+        "letter",
+        "sheet protector",
+        "sheet protectors",
+        "page protector",
+        "page protectors",
+        "11 hole",
+        "non-glare sheet protector"
+      ],
+      "negative_intent_terms": [
+        "document",
+        "letter",
+        "office"
+      ],
+      "target_acos": 0.35,
+      "breakeven_acos": null,
+      "notes": "Default profile generated from current RUBEX card-sleeve reports. Review and tune before using across other products."
+    }
+  ]
+}
