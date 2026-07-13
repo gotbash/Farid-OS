@@ -1,5 +1,10 @@
 # Version History
 
+## v2.4.1 - Amazon.com Research Guardrail
+- Added US marketplace and `amazon.com` defaults to competitor research templates and snapshots.
+- Added Amazon.com search URLs to generated competitor research templates.
+- Updated competitor research reports to show marketplace, search domain, and search URL.
+
 ## v2.4 - Competitor Research Builder
 - Added keyword-based competitor research CSV template generation.
 - Added keyword/search-position fields to competitor snapshots.

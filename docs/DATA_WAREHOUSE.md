@@ -121,7 +121,7 @@ Create Competitor Report
 Snapshot CSV columns:
 
 ```text
-keyword, search_position, competitor_asin, competitor_name, product_asin, brand, price, rating, reviews, coupon, organic_rank, sponsored_rank, captured_at, raw_source
+keyword, search_position, competitor_asin, competitor_name, product_asin, brand, marketplace, search_domain, search_url, price, rating, reviews, coupon, organic_rank, sponsored_rank, captured_at, raw_source
 ```
 
 Example:
@@ -131,6 +131,8 @@ examples/competitor-snapshot-sample.csv
 ```
 
 The current tracker is source-agnostic. Manual CSV, browser automation, Keepa, Helium10, or API collectors can all write the same snapshot format.
+
+Marketplace rule: competitor research defaults to the US marketplace and `amazon.com`. Generated templates include `marketplace=US`, `search_domain=amazon.com`, and an Amazon.com search URL. Do not mix Amazon domains in the same keyword snapshot unless you intentionally want cross-marketplace research.
 
 ## Competitor research builder
 

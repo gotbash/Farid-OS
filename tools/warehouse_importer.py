@@ -174,6 +174,9 @@ def init_schema(conn: sqlite3.Connection) -> None:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             competitor_asin TEXT NOT NULL,
             captured_at TEXT NOT NULL,
+            marketplace TEXT DEFAULT 'US',
+            search_domain TEXT DEFAULT 'amazon.com',
+            search_url TEXT,
             keyword TEXT,
             search_position INTEGER,
             price REAL,
@@ -239,6 +242,12 @@ def init_schema(conn: sqlite3.Connection) -> None:
         conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN keyword TEXT")
     if "search_position" not in existing_columns:
         conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN search_position INTEGER")
+    if "marketplace" not in existing_columns:
+        conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN marketplace TEXT DEFAULT 'US'")
+    if "search_domain" not in existing_columns:
+        conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN search_domain TEXT DEFAULT 'amazon.com'")
+    if "search_url" not in existing_columns:
+        conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN search_url TEXT")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_competitor_snapshots_keyword ON competitor_snapshots(keyword)")
     conn.execute(
         "INSERT OR REPLACE INTO warehouse_meta(key, value) VALUES (?, ?)",

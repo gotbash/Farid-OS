@@ -20,6 +20,8 @@ DEFAULT_CONFIG_PATH = Path("config/competitors.local.json")
 FALLBACK_CONFIG_PATH = Path("config/competitors.example.json")
 DEFAULT_SNAPSHOTS_DIR = Path("~/Downloads/Rubex/Competitors").expanduser()
 DEFAULT_KEYWORD = "trading card sleeves"
+DEFAULT_MARKETPLACE = "US"
+DEFAULT_SEARCH_DOMAIN = "amazon.com"
 
 
 def now_iso() -> str:
@@ -164,14 +166,17 @@ def import_snapshot(conn: sqlite3.Connection, path: Path) -> int:
         conn.execute(
             """
             INSERT INTO competitor_snapshots(
-                competitor_asin, captured_at, keyword, search_position, price, rating, reviews, coupon,
+                competitor_asin, captured_at, marketplace, search_domain, search_url, keyword, search_position, price, rating, reviews, coupon,
                 organic_rank, sponsored_rank, raw_source
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 asin,
                 row.get("captured_at") or captured_at_default,
+                row.get("marketplace") or DEFAULT_MARKETPLACE,
+                row.get("search_domain") or DEFAULT_SEARCH_DOMAIN,
+                row.get("search_url") or (amazon_search_url(row.get("keyword", "")) if row.get("keyword") else None),
                 row.get("keyword"),
                 parse_int(row.get("search_position")),
                 parse_number(row.get("price")),
@@ -198,6 +203,9 @@ def competitor_rows(conn: sqlite3.Connection) -> list[sqlite3.Row]:
                 c.product_asin,
                 c.brand,
                 s.captured_at,
+                s.marketplace,
+                s.search_domain,
+                s.search_url,
                 s.keyword,
                 s.search_position,
                 s.price,
@@ -278,6 +286,8 @@ def build_report(conn: sqlite3.Connection) -> str:
                 f"- Product ASIN: `{row['product_asin'] or 'n/a'}`",
                 f"- Brand: {row['brand'] or 'n/a'}",
                 f"- Captured at: {row['captured_at'] or 'no snapshot yet'}",
+                f"- Marketplace: {row['marketplace'] or DEFAULT_MARKETPLACE}",
+                f"- Search domain: {row['search_domain'] or DEFAULT_SEARCH_DOMAIN}",
                 f"- Keyword: {row['keyword'] or 'n/a'}",
                 f"- Search position: {row['search_position'] or 'n/a'}",
                 f"- Price: {money_delta(row['price'], row['prev_price'])}",
@@ -309,6 +319,9 @@ def write_sample_snapshot(path: Path) -> Path:
             "competitor_name": "Competitor product name",
             "product_asin": "B07VRTQJL8",
             "brand": "Competitor brand",
+            "marketplace": DEFAULT_MARKETPLACE,
+            "search_domain": DEFAULT_SEARCH_DOMAIN,
+            "search_url": amazon_search_url(DEFAULT_KEYWORD),
             "keyword": DEFAULT_KEYWORD,
             "search_position": "1",
             "price": "12.99",
@@ -333,6 +346,11 @@ def slugify(value: str) -> str:
     return "-".join(part for part in slug.split("-") if part)
 
 
+def amazon_search_url(keyword: str, domain: str = DEFAULT_SEARCH_DOMAIN) -> str:
+    query = "+".join(keyword.strip().split())
+    return f"https://www.{domain}/s?k={query}"
+
+
 def write_research_template(path: Path, keyword: str, product_asin: str, rows: int) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = [
@@ -342,6 +360,9 @@ def write_research_template(path: Path, keyword: str, product_asin: str, rows: i
         "competitor_name",
         "product_asin",
         "brand",
+        "marketplace",
+        "search_domain",
+        "search_url",
         "price",
         "rating",
         "reviews",
@@ -360,6 +381,9 @@ def write_research_template(path: Path, keyword: str, product_asin: str, rows: i
             "competitor_name": "",
             "product_asin": product_asin,
             "brand": "",
+            "marketplace": DEFAULT_MARKETPLACE,
+            "search_domain": DEFAULT_SEARCH_DOMAIN,
+            "search_url": amazon_search_url(keyword),
             "price": "",
             "rating": "",
             "reviews": "",
@@ -419,6 +443,9 @@ def research_rows(conn: sqlite3.Connection, keyword: str | None = None) -> list[
                 c.competitor_name,
                 c.product_asin,
                 c.brand,
+                s.marketplace,
+                s.search_domain,
+                s.search_url,
                 s.keyword,
                 s.search_position,
                 s.captured_at,
@@ -498,6 +525,9 @@ def build_research_report(conn: sqlite3.Connection, keyword: str | None = None) 
                 f"### {row['competitor_asin']} — {row['competitor_name'] or 'Unnamed competitor'}",
                 "",
                 f"- Threat: {level_text}",
+                f"- Marketplace: {row['marketplace'] or DEFAULT_MARKETPLACE}",
+                f"- Search domain: {row['search_domain'] or DEFAULT_SEARCH_DOMAIN}",
+                f"- Search URL: {row['search_url'] or 'n/a'}",
                 f"- Keyword: {row['keyword'] or 'n/a'}",
                 f"- Product ASIN: `{row['product_asin'] or 'n/a'}`",
                 f"- Price: {money_delta(row['price'], None)}",
