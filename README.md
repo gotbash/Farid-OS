@@ -1,4 +1,4 @@
-# Farid OS v2.2
+# Farid OS v2.3
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -28,6 +28,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 8. Use `Create PPC Action Plan` after downloading Sponsored Products Search Term, Campaign, and Targeting reports into `~/Downloads/Rubex/Reports`.
 9. Use `Import Rubex Warehouse` to load supported Amazon reports into the local SQLite warehouse.
 10. Use `Create Weekly Forecast` to generate a baseline low/base/high forecast from the warehouse.
+11. Use `Import Competitors Config`, `Import Competitor Snapshot`, and `Create Competitor Report` to track competitor movement.
 
 No API keys or credentials are stored in this repository. Seller Central links may require sign-in and can vary by marketplace/account.
 
@@ -67,5 +68,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v1.19 — PPC Action Plan:** combined Search Term, Campaign, and Targeting action-plan generator.
 - **v2.1 — Data Warehouse Foundation:** local SQLite warehouse for report history, forecasting, competitor tracking, and alerts.
 - **v2.2 — Baseline Forecast Engine:** low/base/high weekly forecast generated from warehouse PPC data.
+- **v2.3 — Competitor Tracker:** competitor config import, snapshot import, movement reporting, and Raycast commands.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

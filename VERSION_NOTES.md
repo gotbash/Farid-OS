@@ -1,5 +1,12 @@
 # Version History
 
+## v2.3 - Competitor Tracker
+- Added competitor/product config import into the local warehouse.
+- Added manual/API-ready competitor snapshot CSV import.
+- Added competitor movement report covering price, rating, reviews, coupon, organic rank, and sponsored rank.
+- Added Raycast commands for competitor config import, snapshot import, and report generation.
+- Added a sample competitor snapshot CSV for repeatable testing.
+
 ## v2.2 - Baseline Forecast Engine
 - Added a weekly low/base/high forecast generator from local warehouse PPC data.
 - Added a `forecasts` table and Raycast command for forecast creation.

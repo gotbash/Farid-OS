@@ -10,3 +10,5 @@ data/
 *.db
 *.sqlite
 *.sqlite3
+config/competitors.local.json
+snapshots/
