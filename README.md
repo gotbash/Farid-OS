@@ -1,4 +1,4 @@
-# Farid OS v2.3
+# Farid OS v2.4
 
 Personal Raycast operating system for Amazon operations, executive reporting, interviews, and a Notion-backed knowledge vault.
 
@@ -29,6 +29,7 @@ Personal Raycast operating system for Amazon operations, executive reporting, in
 9. Use `Import Rubex Warehouse` to load supported Amazon reports into the local SQLite warehouse.
 10. Use `Create Weekly Forecast` to generate a baseline low/base/high forecast from the warehouse.
 11. Use `Import Competitors Config`, `Import Competitor Snapshot`, and `Create Competitor Report` to track competitor movement.
+12. Use `Create Competitor Research Template` for a keyword, fill the CSV, then run `Create Competitor Research Report`.
 
 No API keys or credentials are stored in this repository. Seller Central links may require sign-in and can vary by marketplace/account.
 
@@ -69,5 +70,6 @@ No API keys or credentials are stored in this repository. Seller Central links m
 - **v2.1 — Data Warehouse Foundation:** local SQLite warehouse for report history, forecasting, competitor tracking, and alerts.
 - **v2.2 — Baseline Forecast Engine:** low/base/high weekly forecast generated from warehouse PPC data.
 - **v2.3 — Competitor Tracker:** competitor config import, snapshot import, movement reporting, and Raycast commands.
+- **v2.4 — Competitor Research Builder:** keyword templates, threat scoring, and research action reports.
 
 See [VERSION_NOTES.md](VERSION_NOTES.md) for details.

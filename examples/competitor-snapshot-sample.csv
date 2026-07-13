@@ -1,2 +1,2 @@
-competitor_asin,competitor_name,product_asin,brand,price,rating,reviews,coupon,organic_rank,sponsored_rank,captured_at,raw_source
-REPLACE_WITH_COMPETITOR_ASIN,Competitor product name,B07VRTQJL8,Competitor brand,12.99,4.6,1234,10% off,3,1,2026-07-13T09:14:06+00:00,manual
+competitor_asin,competitor_name,product_asin,brand,keyword,search_position,price,rating,reviews,coupon,organic_rank,sponsored_rank,captured_at,raw_source
+REPLACE_WITH_COMPETITOR_ASIN,Competitor product name,B07VRTQJL8,Competitor brand,trading card sleeves,1,12.99,4.6,1234,10% off,3,1,2026-07-13T09:23:45+00:00,manual

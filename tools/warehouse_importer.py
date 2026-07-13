@@ -174,6 +174,8 @@ def init_schema(conn: sqlite3.Connection) -> None:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             competitor_asin TEXT NOT NULL,
             captured_at TEXT NOT NULL,
+            keyword TEXT,
+            search_position INTEGER,
             price REAL,
             rating REAL,
             reviews INTEGER,
@@ -229,6 +231,15 @@ def init_schema(conn: sqlite3.Connection) -> None:
         CREATE INDEX IF NOT EXISTS idx_alerts_status ON alerts(status);
         """
     )
+    existing_columns = {
+        row["name"]
+        for row in conn.execute("PRAGMA table_info(competitor_snapshots)").fetchall()
+    }
+    if "keyword" not in existing_columns:
+        conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN keyword TEXT")
+    if "search_position" not in existing_columns:
+        conn.execute("ALTER TABLE competitor_snapshots ADD COLUMN search_position INTEGER")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_competitor_snapshots_keyword ON competitor_snapshots(keyword)")
     conn.execute(
         "INSERT OR REPLACE INTO warehouse_meta(key, value) VALUES (?, ?)",
         ("schema_version", str(SCHEMA_VERSION)),

@@ -121,7 +121,7 @@ Create Competitor Report
 Snapshot CSV columns:
 
 ```text
-competitor_asin, competitor_name, product_asin, brand, price, rating, reviews, coupon, organic_rank, sponsored_rank, captured_at, raw_source
+keyword, search_position, competitor_asin, competitor_name, product_asin, brand, price, rating, reviews, coupon, organic_rank, sponsored_rank, captured_at, raw_source
 ```
 
 Example:
@@ -131,3 +131,44 @@ examples/competitor-snapshot-sample.csv
 ```
 
 The current tracker is source-agnostic. Manual CSV, browser automation, Keepa, Helium10, or API collectors can all write the same snapshot format.
+
+## Competitor research builder
+
+Create a keyword-specific research template:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 tools/competitor_tracker.py write-research-template --keyword "trading card sleeves"
+```
+
+Raycast:
+
+```text
+Create Competitor Research Template
+```
+
+Fill the generated CSV with Amazon search results, then import it:
+
+```text
+Import Competitor Snapshot
+```
+
+Create a threat/action report:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 tools/competitor_tracker.py research-report --keyword "trading card sleeves"
+```
+
+Raycast:
+
+```text
+Create Competitor Research Report
+```
+
+Threat scoring uses:
+
+- price gap vs available RUBEX catalog ASP proxy;
+- review moat;
+- rating strength;
+- coupon activity;
+- organic rank;
+- sponsored rank.

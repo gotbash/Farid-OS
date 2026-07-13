@@ -1,5 +1,12 @@
 # Version History
 
+## v2.4 - Competitor Research Builder
+- Added keyword-based competitor research CSV template generation.
+- Added keyword/search-position fields to competitor snapshots.
+- Added threat scoring based on price, review moat, rating, coupon, organic rank, and sponsored rank.
+- Added a competitor research report with recommended PPC/listing actions.
+- Added Raycast commands for research template generation and research report creation.
+
 ## v2.3 - Competitor Tracker
 - Added competitor/product config import into the local warehouse.
 - Added manual/API-ready competitor snapshot CSV import.
